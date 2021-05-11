@@ -28,7 +28,7 @@ namespace InfoTech
             MySqlConnection con = new MySqlConnection(Properties.Resources.connectionString);
             MySqlCommand command = con.CreateCommand();
             con.Open();
-            command.CommandText = "SELECT * FROM personnel WHERE (PRENOM LIKE @query) ORDER BY IDPERSONNEL";
+            command.CommandText = "SELECT * FROM personnel WHERE (PRENOM LIKE @query OR NOM LIKE @query) ORDER BY IDPERSONNEL";
             command.Parameters.AddWithValue("@query", query + "%");
 
             MySqlDataReader reader = command.ExecuteReader();
@@ -48,6 +48,12 @@ namespace InfoTech
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
             updateList(textBox1.Text);
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            Form3 addPersonnel = new Form3();
+            addPersonnel.Show();
         }
     }
 }

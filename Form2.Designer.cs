@@ -45,6 +45,7 @@ namespace InfoTech
             // listBox1
             // 
             this.listBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.listBox1.ForeColor = System.Drawing.Color.Gray;
             this.listBox1.FormattingEnabled = true;
             this.listBox1.ItemHeight = 25;
             this.listBox1.Location = new System.Drawing.Point(78, 166);
@@ -68,9 +69,9 @@ namespace InfoTech
             this.label1.ForeColor = System.Drawing.Color.DarkGray;
             this.label1.Location = new System.Drawing.Point(69, 84);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(199, 25);
+            this.label1.Size = new System.Drawing.Size(276, 25);
             this.label1.TabIndex = 2;
-            this.label1.Text = "Rechercher par nom :";
+            this.label1.Text = "Rechercher par Nom/Prenom :";
             // 
             // label2
             // 
@@ -132,6 +133,7 @@ namespace InfoTech
             this.button3.TabIndex = 7;
             this.button3.Text = "Ajouter";
             this.button3.UseVisualStyleBackColor = false;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // button4
             // 
