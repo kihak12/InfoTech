@@ -54,6 +54,7 @@ namespace InfoTech
         {
             Form3 addPersonnel = new Form3();
             addPersonnel.Show();
+            this.Hide();
         }
     }
 }

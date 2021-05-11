@@ -37,8 +37,8 @@ namespace InfoTech
             this.label6 = new System.Windows.Forms.Label();
             this.inputNom = new System.Windows.Forms.TextBox();
             this.inputPrenom = new System.Windows.Forms.TextBox();
-            this.inputMail = new System.Windows.Forms.TextBox();
             this.inputTel = new System.Windows.Forms.TextBox();
+            this.inputMail = new System.Windows.Forms.TextBox();
             this.listService = new System.Windows.Forms.ComboBox();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
@@ -127,22 +127,22 @@ namespace InfoTech
             this.inputPrenom.Size = new System.Drawing.Size(310, 26);
             this.inputPrenom.TabIndex = 7;
             // 
-            // inputMail
-            // 
-            this.inputMail.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.inputMail.Location = new System.Drawing.Point(205, 249);
-            this.inputMail.Name = "inputMail";
-            this.inputMail.Size = new System.Drawing.Size(310, 26);
-            this.inputMail.TabIndex = 8;
-            this.inputMail.TextChanged += new System.EventHandler(this.textBox3_TextChanged);
-            // 
             // inputTel
             // 
             this.inputTel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.inputTel.Location = new System.Drawing.Point(205, 199);
+            this.inputTel.Location = new System.Drawing.Point(205, 201);
             this.inputTel.Name = "inputTel";
             this.inputTel.Size = new System.Drawing.Size(310, 26);
-            this.inputTel.TabIndex = 9;
+            this.inputTel.TabIndex = 8;
+            this.inputTel.TextChanged += new System.EventHandler(this.textBox3_TextChanged);
+            // 
+            // inputMail
+            // 
+            this.inputMail.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.inputMail.Location = new System.Drawing.Point(205, 251);
+            this.inputMail.Name = "inputMail";
+            this.inputMail.Size = new System.Drawing.Size(310, 26);
+            this.inputMail.TabIndex = 9;
             // 
             // listService
             // 
@@ -191,8 +191,8 @@ namespace InfoTech
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.listService);
-            this.Controls.Add(this.inputTel);
             this.Controls.Add(this.inputMail);
+            this.Controls.Add(this.inputTel);
             this.Controls.Add(this.inputPrenom);
             this.Controls.Add(this.inputNom);
             this.Controls.Add(this.label6);
@@ -219,8 +219,8 @@ namespace InfoTech
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox inputNom;
         private System.Windows.Forms.TextBox inputPrenom;
-        private System.Windows.Forms.TextBox inputMail;
         private System.Windows.Forms.TextBox inputTel;
+        private System.Windows.Forms.TextBox inputMail;
         private System.Windows.Forms.ComboBox listService;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
