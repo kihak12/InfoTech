@@ -66,7 +66,7 @@ namespace InfoTech
             }
             else
             {
-                var result = MessageBox.Show("Voulez vous supprimer ce personnel ?", "Supprimer un personnel", MessageBoxButtons.YesNo);
+                var result = MessageBox.Show("Voulez vous supprimer ce personnel ?\n\rCette action éffacera également les absences de ce personnel.", "Supprimer un personnel", MessageBoxButtons.YesNo);
                 if (result == DialogResult.Yes)
                 {
                     int personnel_id = 0;
@@ -79,19 +79,31 @@ namespace InfoTech
                         MessageBox.Show("erreur");
                     }
 
-                    MySqlConnection con = new MySqlConnection(Properties.Resources.connectionString);
-                    MySqlCommand command = con.CreateCommand();
-                    con.Open();
-                    command.CommandText = "DELETE FROM personnel WHERE IDPERSONNEL = @id_personnel";
-                    command.Parameters.AddWithValue("@id_personnel", personnel_id);
+                    MySqlConnection con2 = new MySqlConnection(Properties.Resources.connectionString);
+                    MySqlCommand command2 = con2.CreateCommand();
+                    con2.Open();
+                    command2.CommandText = "DELETE FROM absence WHERE IDPERSONNEL = @id_personnel";
+                    command2.Parameters.AddWithValue("@id_personnel", personnel_id);
 
-                    if(command.ExecuteNonQuery() > 0)
+                    if (command2.ExecuteNonQuery() > 0)
                     {
-                        MessageBox.Show("Compte Supprimer");
-                        this.Hide();
-                        Form2 addPersonnel = new Form2();
-                        addPersonnel.Show();
+                        MySqlConnection con = new MySqlConnection(Properties.Resources.connectionString);
+                        MySqlCommand command = con.CreateCommand();
+                        con.Open();
+                        command.CommandText = "DELETE FROM personnel WHERE IDPERSONNEL = @id_personnel";
+                        command.Parameters.AddWithValue("@id_personnel", personnel_id);
+
+                        if (command.ExecuteNonQuery() > 0)
+                        {
+                            MessageBox.Show("Compte Supprimer");
+                            this.Hide();
+                            Form2 addPersonnel = new Form2();
+                            addPersonnel.Show();
+                        }
                     }
+                    con2.Close();
+
+                    
                 }
                 else
                     return;
@@ -117,7 +129,7 @@ namespace InfoTech
                 MySqlConnection con = new MySqlConnection(Properties.Resources.connectionString);
                 MySqlCommand command = con.CreateCommand();
                 con.Open();
-                command.CommandText = "SELECT IDMOTIF, DATEDEBUT FROM absence WHERE (IDPERSONNEL LIKE @query)";
+                command.CommandText = "SELECT IDMOTIF, DATEDEBUT FROM absence WHERE (IDPERSONNEL LIKE @query) ORDER BY DATEFIN DESC";
                 command.Parameters.AddWithValue("@query", personnel_id + "%");
 
                 MySqlDataReader reader = command.ExecuteReader();
