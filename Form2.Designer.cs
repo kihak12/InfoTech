@@ -52,6 +52,7 @@ namespace InfoTech
             this.listBox1.Name = "listBox1";
             this.listBox1.Size = new System.Drawing.Size(343, 504);
             this.listBox1.TabIndex = 0;
+            this.listBox1.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
             // 
             // textBox1
             // 
@@ -147,6 +148,7 @@ namespace InfoTech
             this.button4.TabIndex = 8;
             this.button4.Text = "Supprimer";
             this.button4.UseVisualStyleBackColor = false;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // label4
             // 
@@ -163,10 +165,13 @@ namespace InfoTech
             // 
             // listBox2
             // 
+            this.listBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.listBox2.ForeColor = System.Drawing.Color.Gray;
             this.listBox2.FormattingEnabled = true;
+            this.listBox2.ItemHeight = 20;
             this.listBox2.Location = new System.Drawing.Point(494, 329);
             this.listBox2.Name = "listBox2";
-            this.listBox2.Size = new System.Drawing.Size(286, 342);
+            this.listBox2.Size = new System.Drawing.Size(286, 324);
             this.listBox2.TabIndex = 10;
             // 
             // Form2

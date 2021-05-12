@@ -56,5 +56,81 @@ namespace InfoTech
             addPersonnel.Show();
             this.Hide();
         }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            if (listBox1.SelectedIndex == -1)
+            {
+                MessageBox.Show("Aucun personnel sélectionner");
+                return;
+            }
+            else
+            {
+                var result = MessageBox.Show("Voulez vous supprimer ce personnel ?", "Supprimer un personnel", MessageBoxButtons.YesNo);
+                if (result == DialogResult.Yes)
+                {
+                    int personnel_id = 0;
+                    try
+                    {
+                        personnel_id = ((personnel)listBox1.SelectedItem).getID();
+                    }
+                    catch (Exception)
+                    {
+                        MessageBox.Show("erreur");
+                    }
+
+                    MySqlConnection con = new MySqlConnection(Properties.Resources.connectionString);
+                    MySqlCommand command = con.CreateCommand();
+                    con.Open();
+                    command.CommandText = "DELETE FROM personnel WHERE IDPERSONNEL = @id_personnel";
+                    command.Parameters.AddWithValue("@id_personnel", personnel_id);
+
+                    if(command.ExecuteNonQuery() > 0)
+                    {
+                        MessageBox.Show("Compte Supprimer");
+                        this.Hide();
+                        Form2 addPersonnel = new Form2();
+                        addPersonnel.Show();
+                    }
+                }
+                else
+                    return;
+            }
+        }
+
+        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+            if(listBox1.SelectedIndex != -1)
+            {
+                int personnel_id = 0;
+                try
+                {
+                    personnel_id = ((personnel)listBox1.SelectedItem).getID();
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("erreur");
+                    return;
+                }
+
+                MySqlConnection con = new MySqlConnection(Properties.Resources.connectionString);
+                MySqlCommand command = con.CreateCommand();
+                con.Open();
+                command.CommandText = "SELECT IDMOTIF, DATEDEBUT FROM absence WHERE (IDPERSONNEL LIKE @query)";
+                command.Parameters.AddWithValue("@query", personnel_id + "%");
+
+                MySqlDataReader reader = command.ExecuteReader();
+
+                listBox2.Items.Clear();
+                while (reader.Read())
+                {
+                    string motif = utils.getAbsence(reader.GetInt32(0));
+                    listBox2.Items.Add(motif);
+                }
+
+                con.Close();
+            }
+        }
     }
 }
