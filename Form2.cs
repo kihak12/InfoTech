@@ -85,21 +85,20 @@ namespace InfoTech
                     command2.CommandText = "DELETE FROM absence WHERE IDPERSONNEL = @id_personnel";
                     command2.Parameters.AddWithValue("@id_personnel", personnel_id);
 
-                    if (command2.ExecuteNonQuery() > 0)
-                    {
-                        MySqlConnection con = new MySqlConnection(Properties.Resources.connectionString);
-                        MySqlCommand command = con.CreateCommand();
-                        con.Open();
-                        command.CommandText = "DELETE FROM personnel WHERE IDPERSONNEL = @id_personnel";
-                        command.Parameters.AddWithValue("@id_personnel", personnel_id);
+                    command2.ExecuteNonQuery();
 
-                        if (command.ExecuteNonQuery() > 0)
-                        {
-                            MessageBox.Show("Compte Supprimer");
-                            this.Hide();
-                            Form2 addPersonnel = new Form2();
-                            addPersonnel.Show();
-                        }
+                    MySqlConnection con = new MySqlConnection(Properties.Resources.connectionString);
+                    MySqlCommand command = con.CreateCommand();
+                    con.Open();
+                    command.CommandText = "DELETE FROM personnel WHERE IDPERSONNEL = @id_personnel";
+                    command.Parameters.AddWithValue("@id_personnel", personnel_id);
+
+                    if (command.ExecuteNonQuery() > 0)
+                    {
+                        MessageBox.Show("Compte Supprimer");
+                        this.Hide();
+                        Form2 addPersonnel = new Form2();
+                         addPersonnel.Show();
                     }
                     con2.Close();
 
@@ -141,6 +140,95 @@ namespace InfoTech
                     listBox2.Items.Add(motif);
                 }
 
+                con.Close();
+
+                MySqlConnection con2 = new MySqlConnection(Properties.Resources.connectionString);
+                MySqlCommand command2 = con2.CreateCommand();
+                con2.Open();
+                command2.CommandText = "SELECT NOM, PRENOM, TEL, MAIL, IDSERVICE FROM personnel WHERE (IDPERSONNEL LIKE @query)";
+                command2.Parameters.AddWithValue("@query", personnel_id + "%");
+
+                MySqlDataReader reader2 = command2.ExecuteReader();
+
+                if (reader2.Read())
+                {
+                    textBox2.Text = reader2.GetString(0);
+                    textBox3.Text = reader2.GetString(1);
+                    textBox4.Text = reader2.GetString(2);
+                    textBox5.Text = reader2.GetString(3);
+
+                    if (reader2.GetInt32(4) == 1)
+                        comboBox1.SelectedIndex = 0;
+                    else if (reader2.GetInt32(4) == 2)
+                        comboBox1.SelectedIndex = 1;
+                    else if (reader2.GetInt32(4) == 3)
+                        comboBox1.SelectedIndex = 2;
+                    else
+                        comboBox1.SelectedIndex = -1;
+                }
+
+                con2.Close();
+            }
+        }
+
+        private void textBox5_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private bool validateInput()
+        {
+            if (textBox2.Text == "" || textBox3.Text == "" || textBox4.Text == "" || textBox5.Text == "")
+                return false;
+            if (comboBox1.SelectedIndex < 0)
+                return false;
+
+            return true;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (!validateInput())
+            {
+                MessageBox.Show("Veuillez remplir tous les champs");
+                return;
+            }
+            else
+            {
+                int personnel_id = 0;
+                try
+                {
+                    personnel_id = ((personnel)listBox1.SelectedItem).getID();
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("erreur");
+                    return;
+                }
+
+                int service = 0;
+
+                if (comboBox1.SelectedIndex == 0)
+                    service = 1;
+                else if (comboBox1.SelectedIndex == 1)
+                    service = 2;
+                else if (comboBox1.SelectedIndex == 2)
+                    service = 3;
+
+                    MySqlConnection con = new MySqlConnection(Properties.Resources.connectionString);
+
+                string comreq = "UPDATE personnel SET IDSERVICE = '" + service + "', NOM ='" + textBox2.Text + "', PRENOM = '" + textBox3.Text + "', TEL = '" + textBox4.Text + "', MAIL = '" + textBox5.Text + "' WHERE IDPERSONNEL = '" + personnel_id + "'";
+
+                MySqlCommand command = new MySqlCommand(comreq, con);
+
+                con.Open();
+
+
+                if (command.ExecuteNonQuery() == 1)
+                {
+                    MessageBox.Show("Compte Modifier");
+                    updateList("");
+                }
                 con.Close();
             }
         }
