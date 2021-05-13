@@ -109,7 +109,7 @@ namespace InfoTech
             }
         }
 
-        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
+        public void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
 
             if(listBox1.SelectedIndex != -1)
@@ -192,45 +192,75 @@ namespace InfoTech
             {
                 MessageBox.Show("Veuillez remplir tous les champs");
                 return;
+            }else if (listBox1.SelectedIndex == -1)
+            {
+                MessageBox.Show("Veuillez saisir un personnel a modifier ou ajouter en un nouveau");
+                return;
             }
             else
             {
-                int personnel_id = 0;
-                try
+                var result = MessageBox.Show("Voulez vous enregistrer ces modifications ?", "Modifier un personnel", MessageBoxButtons.YesNo);
+                if (result == DialogResult.Yes)
                 {
-                    personnel_id = ((personnel)listBox1.SelectedItem).getID();
-                }
-                catch (Exception)
-                {
-                    MessageBox.Show("erreur");
-                    return;
-                }
+                    int personnel_id = 0;
+                    try
+                    {
+                        personnel_id = ((personnel)listBox1.SelectedItem).getID();
+                    }
+                    catch (Exception)
+                    {
+                        MessageBox.Show("erreur");
+                        return;
+                    }
 
-                int service = 0;
+                    int service = 0;
 
-                if (comboBox1.SelectedIndex == 0)
-                    service = 1;
-                else if (comboBox1.SelectedIndex == 1)
-                    service = 2;
-                else if (comboBox1.SelectedIndex == 2)
-                    service = 3;
+                    if (comboBox1.SelectedIndex == 0)
+                        service = 1;
+                    else if (comboBox1.SelectedIndex == 1)
+                        service = 2;
+                    else if (comboBox1.SelectedIndex == 2)
+                        service = 3;
 
                     MySqlConnection con = new MySqlConnection(Properties.Resources.connectionString);
 
-                string comreq = "UPDATE personnel SET IDSERVICE = '" + service + "', NOM ='" + textBox2.Text + "', PRENOM = '" + textBox3.Text + "', TEL = '" + textBox4.Text + "', MAIL = '" + textBox5.Text + "' WHERE IDPERSONNEL = '" + personnel_id + "'";
+                    string comreq = "UPDATE personnel SET IDSERVICE = '" + service + "', NOM ='" + textBox2.Text + "', PRENOM = '" + textBox3.Text + "', TEL = '" + textBox4.Text + "', MAIL = '" + textBox5.Text + "' WHERE IDPERSONNEL = '" + personnel_id + "'";
 
-                MySqlCommand command = new MySqlCommand(comreq, con);
+                    MySqlCommand command = new MySqlCommand(comreq, con);
 
-                con.Open();
+                    con.Open();
 
 
-                if (command.ExecuteNonQuery() == 1)
-                {
-                    MessageBox.Show("Compte Modifier");
-                    updateList("");
+                    if (command.ExecuteNonQuery() == 1)
+                    {
+                        MessageBox.Show("Compte Modifier");
+                        updateList("");
+                    }
+                    con.Close();
                 }
-                con.Close();
+                else
+                    return;
             }
+        }
+
+        private void listBox2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            if (listBox1.SelectedIndex == -1)
+            {
+                MessageBox.Show("Veuillez sélectionner un personnel");
+                return;
+            }
+            else
+            {
+                Form4 absence = new Form4();
+                absence.affect(((personnel)listBox1.SelectedItem).getID());
+                absence.Show();
+            }            
         }
     }
 }

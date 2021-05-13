@@ -26,7 +26,7 @@ namespace InfoTech
                 motif = "vacances";
             else if (value == 2)
                 motif = "maladie";
-            else if (value == 1)
+            else if (value == 3)
                 motif = "motif familial";
             else
             {
@@ -35,6 +35,6 @@ namespace InfoTech
 
             return motif;
         }
-        
-}
+
+    }
 }
