@@ -23,8 +23,10 @@ namespace InfoTech
 
         }
 
+        // Action lors du clic sur le bouton "Connexion" de la page d'identification
         private void button1_Click(object sender, EventArgs e)
         {
+            //Connexion à la base de donnée MySql et récupération des identifiants de connexions
             MySqlConnection connexion = new MySqlConnection(Properties.Resources.connectionString);
 
             connexion.Open();
@@ -37,15 +39,19 @@ namespace InfoTech
             string log = (string)reader["login"];
             string pass = (string)reader["pwd"];
 
+            // Hashage du mot de passe entré par l'utilisateur
             string enter_pass = utils.hashPassword(password_user.Text);
 
+            // Test du mot de pass entré Hasher, avec celui de la base de donnée 
             if (login_user.Text == log && enter_pass == pass)
             {
+                // Si mot de passe valide affichage de l'interface utilisateur
                 Form2 f = new Form2();
                 f.Show();
                 this.Hide();
             }
             else
+                // Sinon affichage du texte "Identifiants Incorrects"
                 label4.Visible = true;
         }
 

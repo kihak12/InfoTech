@@ -30,6 +30,7 @@ namespace InfoTech
             addPersonnel.Show();
         }
 
+        // Controle que tous les champs du formulaire sonts rempli
         private bool validateInput()
         {
             if (inputNom.Text == "" || inputPrenom.Text == "" || inputMail.Text == "" || inputTel.Text == "")
@@ -42,6 +43,7 @@ namespace InfoTech
 
         private void button1_Click(object sender, EventArgs e)
         {
+            // Controle que tous les champs du formulaire sonts rempli
             if (!validateInput())
             {
                 MessageBox.Show("Veuillez remplir tous les champs");
@@ -57,6 +59,7 @@ namespace InfoTech
             else
                 service = "3";
 
+            // Connexion à la base de donnée MySql afin d'ajouter le personnel créer avec les informations entrer par l'utilisateur
             MySqlConnection con = new MySqlConnection(Properties.Resources.connectionString);
             string req = "INSERT INTO personnel (IDSERVICE, NOM, PRENOM, TEL, MAIL) VALUES ('" + service + "','" + inputNom.Text + "','" + inputPrenom.Text + "','" + inputTel.Text + "','" + inputMail.Text + "')";
 
@@ -66,19 +69,25 @@ namespace InfoTech
             con.Open();
 
 
+            // Confirmation de création du compte
             if (command.ExecuteNonQuery() == 1)
             {
                 MessageBox.Show("Compte Créer");
             }
 
             con.Close();
-            
+            // Retour a la page d'acceuil de gestion du personnel
             this.Hide();
             Form2 addPersonnel = new Form2();
             addPersonnel.Show();
         }
 
         private void textBox3_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Form3_Load(object sender, EventArgs e)
         {
 
         }

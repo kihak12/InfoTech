@@ -21,11 +21,13 @@ namespace InfoTech
             this.mail = mail;
         }
 
+        // Renvoie le nom + prenom du personnel courrant
         public override string ToString()
         {
             return nom + " - " + prenom;
         }
 
+        // Renvoie l'ID du personnel courrant
         public int getID(){ return id; }
     }
 }
